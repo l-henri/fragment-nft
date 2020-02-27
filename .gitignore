@@ -1,3 +1,6 @@
-truffle*
+node_modules
 build
+dist
+.cache
+.env
 temp-henri

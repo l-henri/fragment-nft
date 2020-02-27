@@ -1,0 +1,11 @@
+{
+  "name": "fragment-nft",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/l-henri/fragment-nft",
+  "author": "krouspy <knjlau1@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "truffle": "^5.1.15"
+  }
+}
