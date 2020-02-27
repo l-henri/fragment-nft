@@ -12,6 +12,8 @@ contract fragmentClaimer {
     uint maxTokenId;
     address ERC721address;
 
+    event UpdateWhitelist(address _account, bool _value);
+
     constructor(uint _maxTokenId, address _ERC721address) public
     {
         whitelist[msg.sender] = true;
@@ -69,6 +71,18 @@ contract fragmentClaimer {
       return whitelist[ecrecover(keccak256(
         abi.encodePacked("\x19Ethereum Signed Message:\n32", _hash)
       ), v, r, s)];
+        }
+      }
+
+      //  20/02/27: Borrowed from https://github.com/rocksideio/contracts/blob/master/contracts/Identity.sol
+  function updateWhitelist(address _account, bool _value) onlyWhitelisted public returns(bool) {
+        whitelist[_account] = _value;
+        emit UpdateWhitelist(_account,_value);
+        return true;
     }
-  }
+
+    modifier onlyWhitelisted() {
+        require(whitelist[msg.sender],"Account Not Whitelisted");
+        _;
+    }
 }
