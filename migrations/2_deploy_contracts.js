@@ -14,6 +14,8 @@ async function doDeploy(deployer, network, accounts) {
   );
   // Declare fragmentClaimer as minter for ERC721
   await ERC721Contract.addMinter(fragmentClaimerContract.address);
+
+  await fragmentClaimerContract.claimAToken(10,)
 }
 module.exports = (deployer, network, accounts) => {
   deployer.then(async () => {

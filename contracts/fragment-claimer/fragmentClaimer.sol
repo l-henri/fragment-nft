@@ -46,7 +46,7 @@ contract fragmentClaimer {
         // Not sure this is useful but oh well
         require(_tokenToClaim <= maxTokenId);
         // Creating a hash unique to this token number, and this token contract
-        bytes32 _hash = keccak256(abi.encode(ERC721address, _tokenToClaim));
+        bytes32 _hash = keccak256(abi.encode(ERC721address, _tokenToClaim, _tokenURI));
         // Making sure that the signer has been whitelisted
         require(signerIsWhitelisted(_hash, _signature));
         // All should be good, so we mint a token yeah
