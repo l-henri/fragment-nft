@@ -1,7 +1,7 @@
 pragma solidity ^0.5.0;
 
-import "./ERC721.sol";
-import "../../access/roles/MinterRole.sol";
+import "../ERC721/ERC721.sol";
+import "../../../access/roles/MinterRole.sol";
 
 /**
  * @title ERC721Mintable

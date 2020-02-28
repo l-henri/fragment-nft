@@ -1,8 +1,8 @@
 pragma solidity ^0.5.0;
 
-import "./ERC721.sol";
-import "./ERC721Enumerable.sol";
-import "./ERC721Metadata.sol";
+import "../ERC721/ERC721.sol";
+import "../ERC721Enumerable/ERC721Enumerable.sol";
+import "../ERC721Metadata/ERC721Metadata.sol";
 
 /**
  * @title Full ERC721 Token
