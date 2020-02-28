@@ -34,13 +34,13 @@ contract fragmentClaimer {
 
     function claimAToken(uint _tokenToClaim, string memory _tokenURI, bytes memory _signature) public payable returns (bool) {
         // Checking if the token has already been claimed
-        require(!tokensThatWereClaimed[_tokenToClaim]);
+        require(!tokensThatWereClaimed[_tokenToClaim], "Claim: token already claimed");
         // Not sure this is useful but oh well
-        require(_tokenToClaim <= maxTokenId);
+        require(_tokenToClaim <= maxTokenId, "Claim: tokenId outbounds");
         // Creating a hash unique to this token number, and this token contract
         bytes32 _hash = keccak256(abi.encode(ERC721address, _tokenToClaim, _tokenURI));
         // Making sure that the signer has been whitelisted
-        require(signerIsWhitelisted(_hash, _signature));
+        require(signerIsWhitelisted(_hash, _signature), "Claim: signer not whitelisted");
         // All should be good, so we mint a token yeah
         ERC721MetadataMintable targetERC721Contract = ERC721MetadataMintable(ERC721address);
         targetERC721Contract.mintWithTokenURI(msg.sender, _tokenToClaim, _tokenURI);
@@ -101,14 +101,14 @@ contract fragmentClaimer {
 	}
 
 	//  20/02/27: Borrowed from https://github.com/rocksideio/contracts/blob/master/contracts/Identity.sol
-	function updateWhitelist(address _account, bool _value) onlyWhitelisted public returns(bool) {
+	function updateWhitelist(address _account, bool _value) onlyWhitelisted public returns (bool) {
         whitelist[_account] = _value;
-        emit UpdateWhitelist(_account,_value);
+        emit UpdateWhitelist(_account, _value);
         return true;
     }
 
     modifier onlyWhitelisted() {
-        require(whitelist[msg.sender],"Account Not Whitelisted");
+        require(whitelist[msg.sender], "Account Not Whitelisted");
         _;
     }
 }
