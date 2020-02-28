@@ -25,6 +25,17 @@ contract fragmentClaimer {
         ERC721address = _ERC721address;
     }
 
+    function ()
+    external
+    payable
+    {
+        if (msg.value > 0)
+        {
+            emit yeeeeeeaaaaaahThxCoeurCoeurCoeur(msg.sender);
+            totalFunds += msg.value;
+        }
+    }
+
     function claimAToken(uint _tokenToClaim, bytes memory _signature) 
     public 
     payable
