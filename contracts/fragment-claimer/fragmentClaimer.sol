@@ -1,6 +1,6 @@
 pragma solidity ^0.5.0;
 
-import "../token/ERC721/ERC721Mintable.sol";
+import "../token/ERC721/ERC721Mintable/ERC721Mintable.sol";
 
 /**
  * @title ERC721 Non-Fungible Token Standard basic implementation
