@@ -1,6 +1,6 @@
 var Web3 = require('web3')
 
-const contractAddress = "0x6F891Cc103F5F320C129Baeb6622f52E15522527"
+const contractAddress = "0xCae68CB461c5a8f7d78EdafEf344c989e709AB18"
 const tokenNumber = 10
 const tokenURI = "http://www.mescouilles.com"
 

@@ -15,7 +15,16 @@ async function doDeploy(deployer, network, accounts) {
   // Declare fragmentClaimer as minter for ERC721
   await ERC721Contract.addMinter(fragmentClaimerContract.address);
 
-  await fragmentClaimerContract.claimAToken(10,)
+  // Testing to claim a token
+	const tokenNumber = 10
+	// const tokenURI = "http://www.mescouilles.com"
+	// const parametersEncoded = web3.eth.abi.encodeParameters(['address', 'uint256', 'string'], [ERC721.address, tokenNumber, tokenURI]);
+	const parametersEncoded = web3.eth.abi.encodeParameters(['address', 'uint256'], [ERC721.address, tokenNumber]);
+	const hashToSign = web3.utils.keccak256(parametersEncoded)
+	const signature = await web3.eth.sign(hashToSign,accounts[0])
+	console.log(signature)
+  	// await fragmentClaimerContract.claimAToken(tokenNumber, tokenURI, signature)
+  	await fragmentClaimerContract.claimAToken(tokenNumber, signature)
 }
 module.exports = (deployer, network, accounts) => {
   deployer.then(async () => {
