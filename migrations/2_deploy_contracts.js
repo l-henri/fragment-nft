@@ -1,13 +1,16 @@
-var ERC721 = artifacts.require("./token/ERC721/ERC721Mintable.sol");
-var fragmentClaimer = artifacts.require(
+const Web3 = require("web3");
+
+
+const ERC721 = artifacts.require(
+  "./ERC721/ERC721MetadataMintable/ERC721MetadataMintable.sol"
+);
+const fragmentClaimer = artifacts.require(
   "./fragment-claimer/fragmentClaimer.sol"
 );
 
 async function doDeploy(deployer, network, accounts) {
-  // Deployer ERC721
-  ERC721Contract = await deployer.deploy(ERC721);
-  // Deploy fragmentClaimer
-  fragmentClaimerContract = await deployer.deploy(
+  const ERC721Contract = await deployer.deploy(ERC721, "jsp", "gro");
+  const fragmentClaimerContract = await deployer.deploy(
     fragmentClaimer,
     500,
     ERC721Contract.address
@@ -25,9 +28,16 @@ async function doDeploy(deployer, network, accounts) {
 	console.log(signature)
   	// await fragmentClaimerContract.claimAToken(tokenNumber, tokenURI, signature)
   	await fragmentClaimerContract.claimAToken(tokenNumber, signature)
+
 }
+
 module.exports = (deployer, network, accounts) => {
   deployer.then(async () => {
     await doDeploy(deployer, network, accounts);
   });
 };
+/*
+module.exports = deployer => {
+  deployer.deploy(ERC721, "jsp", "gro");
+};
+*/
