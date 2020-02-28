@@ -10,9 +10,13 @@ contract fragmentClaimer {
     mapping(address => bool) public whitelist;
     mapping(uint => bool) public tokensThatWereClaimed;
     uint maxTokenId;
+    uint totalFunds;
     address ERC721address;
 
     event UpdateWhitelist(address _account, bool _value);
+    event aTokenWasClaimed(uint _tokenNumber, address _tokenClaimer);
+    event yeeeeeeaaaaaahThxCoeurCoeurCoeur(address _tipper);
+    event withdrawFunds(address _withdrawer, uint _funds);
 
     constructor(uint _maxTokenId, address _ERC721address) public
     {
@@ -23,6 +27,7 @@ contract fragmentClaimer {
 
     function claimAToken(uint _tokenToClaim, bytes memory _signature) 
     public 
+    payable
     returns (bool)
     {
         // Checking if the token has already been claimed
@@ -37,7 +42,29 @@ contract fragmentClaimer {
         ERC721Mintable targetERC721Contract = ERC721Mintable(ERC721address);
         targetERC721Contract.mint(msg.sender, _tokenToClaim);
 
+        // Registering that the token was claimed
+        // Note that there is a check in the ERC721 for this too
+        tokensThatWereClaimed[_tokenToClaim] = true;
+        // Emitting an event
+        emit aTokenWasClaimed(_tokenToClaim, msg.sender);
+
+        // If a tip was included, thank the tipper
+        if (msg.value > 0)
+        {
+            emit yeeeeeeaaaaaahThxCoeurCoeurCoeur(msg.sender);
+            totalFunds += msg.value;
+        }
+        
     }
+
+    function withdrawTips()
+    public
+    onlyWhitelisted
+    {
+        msg.sender.transfer(totalFunds);
+        emit withdrawFunds(msg.sender, totalFunds );
+    }
+
 
     // 20/02/27: Borrowed from https://github.com/austintgriffith/bouncer-proxy/blob/master/BouncerProxy/BouncerProxy.sol
     //borrowed from OpenZeppelin's ESDA stuff:
