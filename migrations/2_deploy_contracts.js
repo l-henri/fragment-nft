@@ -20,14 +20,12 @@ async function doDeploy(deployer, network, accounts) {
 
   // Testing to claim a token
 	const tokenNumber = 10
-	// const tokenURI = "http://www.mescouilles.com"
-	// const parametersEncoded = web3.eth.abi.encodeParameters(['address', 'uint256', 'string'], [ERC721.address, tokenNumber, tokenURI]);
-	const parametersEncoded = web3.eth.abi.encodeParameters(['address', 'uint256'], [ERC721.address, tokenNumber]);
+	const tokenURI = "http://www.mescouilles.com"
+	const parametersEncoded = web3.eth.abi.encodeParameters(['address', 'uint256', 'string'], [ERC721.address, tokenNumber, tokenURI]);
 	const hashToSign = web3.utils.keccak256(parametersEncoded)
 	const signature = await web3.eth.sign(hashToSign,accounts[0])
 	console.log(signature)
-  	// await fragmentClaimerContract.claimAToken(tokenNumber, tokenURI, signature)
-  	await fragmentClaimerContract.claimAToken(tokenNumber, signature)
+  	await fragmentClaimerContract.claimAToken(tokenNumber, tokenURI, signature)
 
 }
 

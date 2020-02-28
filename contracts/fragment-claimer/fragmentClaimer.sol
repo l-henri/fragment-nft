@@ -1,7 +1,7 @@
 pragma solidity ^0.5.0;
 
-// import "../token/ERC721/ERC721MetadataMintable/ERC721MetadataMintable.sol";
-import "../ERC721/ERC721Mintable/ERC721Mintable.sol";
+import "../ERC721/ERC721MetadataMintable/ERC721MetadataMintable.sol";
+// import "../ERC721/ERC721Mintable/ERC721Mintable.sol";
 
 
 /**
@@ -34,9 +34,7 @@ contract fragmentClaimer {
         }
     }
 
-
-    function claimAToken(uint _tokenToClaim, bytes memory _signature) 
-    // function claimAToken(uint _tokenToClaim, string memory _tokenURI, bytes memory _signature) 
+    function claimAToken(uint _tokenToClaim, string memory _tokenURI, bytes memory _signature) 
     public 
     payable
     returns (bool)
@@ -47,15 +45,12 @@ contract fragmentClaimer {
         // Not sure this is useful but oh well
         require(_tokenToClaim <= maxTokenId, "Claim: tokenId outbounds");
         // Creating a hash unique to this token number, and this token contract
-        // bytes32 _hash = keccak256(abi.encode(ERC721address, _tokenToClaim, _tokenURI));
-        bytes32 _hash = keccak256(abi.encode(ERC721address, _tokenToClaim));
+        bytes32 _hash = keccak256(abi.encode(ERC721address, _tokenToClaim, _tokenURI));
         // Making sure that the signer has been whitelisted
         require(signerIsWhitelisted(_hash, _signature), "Claim: signer not whitelisted");
         // All should be good, so we mint a token yeah
-        // ERC721MetadataMintable targetERC721Contract = ERC721MetadataMintable(ERC721address);
-        ERC721Mintable targetERC721Contract = ERC721Mintable(ERC721address);
-        // targetERC721Contract.mintWithTokenURI(msg.sender, _tokenToClaim, _tokenURI);
-        targetERC721Contract.mint(msg.sender, _tokenToClaim);
+        ERC721MetadataMintable targetERC721Contract = ERC721MetadataMintable(ERC721address);
+        targetERC721Contract.mintWithTokenURI(msg.sender, _tokenToClaim, _tokenURI);
 
         // Registering that the token was claimed
         // Note that there is a check in the ERC721 for this too
