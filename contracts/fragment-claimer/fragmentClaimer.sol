@@ -1,7 +1,6 @@
 pragma solidity ^0.5.0;
 
 import "../ERC721/ERC721MetadataMintable/ERC721MetadataMintable.sol";
-import "./signatureTester.sol";
 
 /**
  * @title ERC721 Non-Fungible Token Standard basic implementation
@@ -9,65 +8,59 @@ import "./signatureTester.sol";
  */
 contract fragmentClaimer {
     event UpdateWhitelist(address _account, bool _value);
-    event aTokenWasClaimed(uint _tokenNumber, address _tokenClaimer);
-    event yeeeeeeaaaaaahThxCoeurCoeurCoeur(address _tipper);
-    event withdrawFunds(address _withdrawer, uint _funds);
+    event TokenClaimed(uint _tokenNumber, address _tokenClaimer);
+    event YeeeeeeaaaaaahThxCoeurCoeurCoeur(address _tipper);
+    event WithdrawFunds(address _withdrawer, uint _funds);
 
     mapping(address => bool) public whitelist;
-    mapping(uint => bool) public tokensThatWereClaimed;
-
-    SignatureTester private signatureTester;
+    mapping(uint => bool) public tokensClaimed;
 
     uint maxTokenId;
     uint totalFunds;
     address ERC721address;
 
-    constructor(uint _maxTokenId, address _ERC721address, SignatureTester _signatureTester) public {
+    constructor(uint _maxTokenId, address _ERC721address) public {
         whitelist[msg.sender] = true;
         maxTokenId = _maxTokenId;
         ERC721address = _ERC721address;
-        signatureTester = _signatureTester;
     }
 
     function () external payable {
         if (msg.value > 0) {
             totalFunds += msg.value;
-            emit yeeeeeeaaaaaahThxCoeurCoeurCoeur(msg.sender);
+            emit YeeeeeeaaaaaahThxCoeurCoeurCoeur(msg.sender);
         }
     }
 
-    // function claimToken(uint _tokenId, string memory _tokenURI, bytes memory _signature)
-    function claimToken(uint _tokenId, string memory _tokenURI)
+    function claimToken(uint _tokenId, string memory _tokenURI, bytes memory _signature)
     public
     payable
     returns (bool)
     {
-        require(!tokensThatWereClaimed[_tokenId], "Claim: token already claimed");
+        require(!tokensClaimed[_tokenId], "Claim: token already claimed");
         require(_tokenId <= maxTokenId, "Claim: tokenId outbounds");
         // Creating a hash unique to this token number, and this token contract
         bytes32 _hash = keccak256(abi.encode(ERC721address, _tokenId, _tokenURI));
         // Making sure that the signer has been whitelisted
-        signatureTester.getHash(ERC721address, _tokenId, _tokenURI);
-        bytes memory _signature = signatureTester.compiledHash;
         require(signerIsWhitelisted(_hash, _signature), "Claim: signer not whitelisted");
         // All should be good, so we mint a token yeah
         ERC721MetadataMintable targetERC721Contract = ERC721MetadataMintable(ERC721address);
         targetERC721Contract.mintWithTokenURI(msg.sender, _tokenId, _tokenURI);
         // Registering that the token was claimed
         // Note that there is a check in the ERC721 for this too
-        tokensThatWereClaimed[_tokenId] = true;
+        tokensClaimed[_tokenId] = true;
         // Emitting an event
-        emit aTokenWasClaimed(_tokenId, msg.sender);
+        emit TokenClaimed(_tokenId, msg.sender);
         // If a tip was included, thank the tipper
         if (msg.value > 0) {
-            emit yeeeeeeaaaaaahThxCoeurCoeurCoeur(msg.sender);
+            emit YeeeeeeaaaaaahThxCoeurCoeurCoeur(msg.sender);
             totalFunds += msg.value;
         }
     }
 
     function withdrawTips() public onlyWhitelisted {
         msg.sender.transfer(totalFunds);
-        emit withdrawFunds(msg.sender, totalFunds);
+        emit WithdrawFunds(msg.sender, totalFunds);
     }
 
     // 20/02/27: Borrowed from https://github.com/austintgriffith/bouncer-proxy/blob/master/BouncerProxy/BouncerProxy.sol
