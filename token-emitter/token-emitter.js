@@ -35,7 +35,7 @@ async function signAllTokens() {
   }
   // console.log(signaturesDictionnary)
   var json = JSON.stringify(signaturesDictionnary);
-  fs.writeFile ("myjsonfile.json", json, function(err) {
+  fs.writeFile ("output-sig.json", json, function(err) {
     if (err) throw err;
     console.log('complete');
     }
