@@ -9,7 +9,8 @@
   },
   "alias": {
     "#root": "./src",
-    "#contractAbis": "./src/contracts"
+    "#contractAbis": "./src/contracts",
+    "#assets": "./src/assets"
   },
   "dependencies": {
     "@babel/polyfill": "^7.8.3",
