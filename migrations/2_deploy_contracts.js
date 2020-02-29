@@ -44,8 +44,10 @@ async function doDeploy(deployer, network, accounts) {
       uri2,
       accounts[0]
     );
-    await fragmentClaimerContract.claimAToken(tokenNumber1, uri1, signature1);
-    await fragmentClaimerContract.claimAToken(tokenNumber2, uri2, signature2);
+    console.log(signature1);
+    console.log(signature2);
+    await fragmentClaimerContract.claimToken(tokenNumber1, uri1, signature1);
+    await fragmentClaimerContract.claimToken(tokenNumber2, uri2, signature2);
   } else {
     console.log("not ganache network");
   }
