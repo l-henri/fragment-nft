@@ -6,7 +6,7 @@ import "../ERC721/ERC721MetadataMintable/ERC721MetadataMintable.sol";
  * @title ERC721 Non-Fungible Token Standard basic implementation
  * @dev see https://eips.ethereum.org/EIPS/eip-721
  */
-contract fragmentClaimer {
+contract FragmentClaimer {
     event UpdateWhitelist(address _account, bool _value);
     event TokenClaimed(uint _tokenNumber, address _tokenClaimer);
     event YeeeeeeaaaaaahThxCoeurCoeurCoeur(address _tipper);
