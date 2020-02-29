@@ -2,7 +2,7 @@ const ERC721 = artifacts.require(
   "./ERC721/ERC721MetadataMintable/ERC721MetadataMintable.sol"
 );
 const fragmentClaimer = artifacts.require(
-  "./fragment-claimer/fragmentClaimer.sol"
+  "./FragmentClaimer/FragmentClaimer.sol"
 );
 
 const tokenNumber1 = 10;
