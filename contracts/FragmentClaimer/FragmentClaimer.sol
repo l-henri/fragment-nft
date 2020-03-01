@@ -32,13 +32,13 @@ contract FragmentClaimer {
         }
     }
 
-    function claimToken(uint _tokenId, string memory _tokenURI, bytes memory _signature)
-    public
+    function claimAToken(uint _tokenToClaim, string memory _tokenURI, bytes memory _signature) 
+    public 
     payable
     returns (bool)
     {
-        require(!tokensClaimed[_tokenId], "Claim: token already claimed");
-        require(_tokenId <= maxTokenId, "Claim: tokenId outbounds");
+        require(!tokensClaimed[_tokenToClaim], "Claim: token already claimed");
+        require(_tokenToClaim <= maxTokenId, "Claim: tokenId outbounds");
         // Creating a hash unique to this token number, and this token contract
         bytes32 _hash = keccak256(abi.encode(ERC721address, _tokenToClaim, _tokenURI));
         // Making sure that the signer has been whitelisted
@@ -50,9 +50,9 @@ contract FragmentClaimer {
 
         // Registering that the token was claimed
         // Note that there is a check in the ERC721 for this too
-        tokensClaimed[_tokenId] = true;
+        tokensClaimed[_tokenToClaim] = true;
         // Emitting an event
-        emit TokenClaimed(_tokenId, msg.sender);
+        emit TokenClaimed(_tokenToClaim, msg.sender);
         // If a tip was included, thank the tipper
         if (msg.value > 0) {
             emit YeeeeeeaaaaaahThxCoeurCoeurCoeur(msg.sender);
