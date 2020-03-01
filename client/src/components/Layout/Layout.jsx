@@ -3,7 +3,7 @@ import React from "react";
 const style = {
   display: "flex",
   justifyContent: "center",
-  marginTop: 150
+  marginTop: 25
 };
 
 export const Layout = ({ children }) => {
