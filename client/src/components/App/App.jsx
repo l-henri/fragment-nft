@@ -3,8 +3,8 @@ import getWeb3 from "#root/getWeb3";
 import FragmentClaimerContract from "#contractAbis/FragmentClaimer";
 
 import Header from "../Header";
-import Layout from "../Layout";
-import Art from "../Art";
+import Drawer from "../Drawer";
+import Home from "../Home";
 
 export const App = () => {
   const [data, setData] = useState({
@@ -12,6 +12,7 @@ export const App = () => {
     fragmentClaimer: null,
     accounts: []
   });
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const init = async () => {
@@ -32,14 +33,17 @@ export const App = () => {
     init();
   }, []);
 
-  const { web3, fragmentClaimer, accounts } = data;
+  const handleOpen = () => {
+    setOpen(!open);
+  };
+
+  const { web3, fragmentClaimer } = data;
 
   return (
     <React.Fragment>
       <Header />
-      <Layout>
-        <Art web3={web3} fragmentClaimer={fragmentClaimer} />
-      </Layout>
+      <Drawer open={open} handleOpen={handleOpen} />
+      <Home web={web3} fragmentClaimer={fragmentClaimer} />
     </React.Fragment>
   );
 };
