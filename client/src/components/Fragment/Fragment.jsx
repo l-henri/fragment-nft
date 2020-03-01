@@ -8,11 +8,17 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import { serverURI } from "#root/config/config";
 
 const useStyles = makeStyles(() => ({
-  image: {
-    width: "98%",
-    height: "98%",
-    cursor: "pointer"
-  }
+  root: {
+    background: "grey",
+    overflow: "hidden"
+  },
+  image: props => ({
+    width: "97.5%",
+    height: "97.5%",
+    cursor: "pointer",
+    objectFit: "cover",
+    opacity: props.isClaimed ? 1 : 0.5
+  })
 }));
 
 export const Fragment = ({
@@ -21,14 +27,14 @@ export const Fragment = ({
   columnNumber,
   firstHalf
 }) => {
-  const classes = useStyles();
-
   const [open, setOpen] = useState(false);
   const [fragment, setFragment] = useState({
     number: 0,
     isClaimed: false,
     url: ""
   });
+
+  const classes = useStyles({ isClaimed: fragment.isClaimed });
 
   useEffect(() => {
     const init = async () => {
@@ -69,7 +75,7 @@ export const Fragment = ({
   const { number, url } = fragment;
 
   return (
-    <Grid item xs={1}>
+    <Grid className={classes.root} item xs={1}>
       <img className={classes.image} onClick={handleOpen} src={url} />
       <Dialog open={open} onClose={handleOpen}>
         <DialogTitle>Fragment {number}</DialogTitle>
