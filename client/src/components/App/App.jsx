@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import getWeb3 from "#root/getWeb3";
 import FragmentClaimerContract from "#contractAbis/FragmentClaimer";
 
 import Header from "../Header";
 import Drawer from "../Drawer";
 import Home from "../Home";
+import Claim from "../Claim";
 
 export const App = () => {
   const [data, setData] = useState({
@@ -40,10 +42,17 @@ export const App = () => {
   const { web3, fragmentClaimer } = data;
 
   return (
-    <React.Fragment>
+    <Router>
       <Header />
       <Drawer open={open} handleOpen={handleOpen} />
-      <Home web={web3} fragmentClaimer={fragmentClaimer} />
-    </React.Fragment>
+      <Switch>
+        <Route exact path="/">
+          <Home web3={web3} fragmentClaimer={fragmentClaimer} />
+        </Route>
+        <Route exact path="/claim/:tokenNumber">
+          <Claim />
+        </Route>
+      </Switch>
+    </Router>
   );
 };
