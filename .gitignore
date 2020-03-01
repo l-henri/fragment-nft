@@ -5,5 +5,4 @@ dist
 *.env
 client/src/contracts
 temp-henri
-truffle*
 *output-sig.json
