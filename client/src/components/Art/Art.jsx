@@ -6,13 +6,13 @@ import Row from "./Row";
 
 const useStyles = makeStyles(() => ({
   root: {
-    width: "55vw",
-    height: "70vh",
+    width: "75vw",
+    height: "85vh",
     backgroundColor: "red"
   }
 }));
 
-export const Art = () => {
+export const Art = ({ fragmentClaimer }) => {
   const classes = useStyles();
 
   return (
@@ -23,10 +23,14 @@ export const Art = () => {
       alignItems="center"
       className={classes.root}
     >
-      {Array(18)
+      {Array(4)
         .fill(0)
         .map((_, index) => (
-          <Row key={index} />
+          <Row
+            key={index}
+            fragmentClaimer={fragmentClaimer}
+            rowNumber={index}
+          />
         ))}
     </Grid>
   );
