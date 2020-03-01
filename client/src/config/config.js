@@ -1,3 +1,3 @@
 module.exports = {
-  serverURI: "http://localhost:3000"
+  serverURI: "https://fragment-nft-server.herokuapp.com"
 };
