@@ -40,12 +40,14 @@ contract FragmentClaimer {
         require(!tokensClaimed[_tokenId], "Claim: token already claimed");
         require(_tokenId <= maxTokenId, "Claim: tokenId outbounds");
         // Creating a hash unique to this token number, and this token contract
-        bytes32 _hash = keccak256(abi.encode(ERC721address, _tokenId, _tokenURI));
+        bytes32 _hash = keccak256(abi.encode(ERC721address, _tokenToClaim, _tokenURI));
         // Making sure that the signer has been whitelisted
         require(signerIsWhitelisted(_hash, _signature), "Claim: signer not whitelisted");
         // All should be good, so we mint a token yeah
         ERC721MetadataMintable targetERC721Contract = ERC721MetadataMintable(ERC721address);
-        targetERC721Contract.mintWithTokenURI(msg.sender, _tokenId, _tokenURI);
+
+        targetERC721Contract.mintWithTokenURI(msg.sender, _tokenToClaim, _tokenURI);
+
         // Registering that the token was claimed
         // Note that there is a check in the ERC721 for this too
         tokensClaimed[_tokenId] = true;
