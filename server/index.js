@@ -12,6 +12,6 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use("/api/fragment", express.static(path.join(__dirname, "fragments")));
+app.use("/api/fragment", express.static(path.join(__dirname, "assets")));
 
 app.listen(PORT, () => console.log(`Server listening on PORT ${PORT}`));
