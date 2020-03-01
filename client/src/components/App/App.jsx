@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import getWeb3 from "#root/getWeb3";
 import FragmentClaimerContract from "#contractAbis/FragmentClaimer";
 
+import Header from "../Header";
 import Layout from "../Layout";
 import Art from "../Art";
 
@@ -34,8 +35,11 @@ export const App = () => {
   const { web3, fragmentClaimer, accounts } = data;
 
   return (
-    <Layout>
-      <Art web3={web3} fragmentClaimer={fragmentClaimer} />
-    </Layout>
+    <React.Fragment>
+      <Header />
+      <Layout>
+        <Art web3={web3} fragmentClaimer={fragmentClaimer} />
+      </Layout>
+    </React.Fragment>
   );
 };
