@@ -1,6 +1,6 @@
 [submodule "server"]
 	path = server
-	url = ./server
+	url = "https://git.heroku.com/fragment-nft-server.git"
 [submodule "client"]
 	path = client
-	url = ./client
+	url = "https://github.com/krouspy/fragment-nft-client"
