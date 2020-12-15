@@ -6,3 +6,4 @@ dist
 client/src/contracts
 temp-henri
 *output-sig.json
+truffle*
